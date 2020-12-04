@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SqreenDispatcher.Services;
 using SqreenDispatcher.Services.Targets;
-using SqreenDispatcher.WebHooks;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +14,13 @@ namespace SqreenDispatcher
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+           .SetBasePath(env.ContentRootPath)
+           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,12 +30,7 @@ namespace SqreenDispatcher
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddWebhooks(opt =>
-            {
-                // default is "webhooks"
-                opt.RoutePrefix = "wh";
-            });
-            var targetsConfig = Configuration.GetValue<string[]>("Targets");
+            var targetsConfig = Configuration.GetSection("Targets").Get<List<string>>();
             if (targetsConfig.Any(t => t == "email"))
             {
                 services.AddTransient<ITarget, EmailTarget>();
@@ -50,7 +50,6 @@ namespace SqreenDispatcher
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

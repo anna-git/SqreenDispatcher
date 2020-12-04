@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SqreenDispatcher.Services.Model
 {
-    public class Message
+    public class SqreenMessage
     {
         
     }

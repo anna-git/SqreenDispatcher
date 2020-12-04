@@ -9,7 +9,7 @@ namespace SqreenDispatcher.Services
 
         public Dispatcher(IEnumerable<ITarget> targets) => _targets = targets;
 
-        public void Dispatch(Message message)
+        public void Dispatch(SqreenMessage message)
         {
             foreach (var target in _targets)
                 target.Notify(message);
