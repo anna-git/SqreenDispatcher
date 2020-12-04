@@ -31,19 +31,13 @@ namespace SqreenDispatcher
             services.AddControllers();
             services.AddLogging();
             var targetsConfig = Configuration.GetSection("Targets").Get<List<string>>();
-            if (targetsConfig.Any(t => t == "email"))
+            foreach (var item in targetsConfig)
             {
-                services.AddTransient<ITarget, EmailTarget>();
-            }
-            if (targetsConfig.Any(t => t == "log"))
-            {
-                services.AddTransient<ITarget, LogTarget>();
-            }
-            if (targetsConfig.Any(t => t == "database"))
-            {
-                services.AddTransient<ITarget, DatabaseTarget>();
+                var type = TargetsConsts.targetTypes[item];
+                services.AddTransient(typeof(ITarget), type);
             }
 
+            services.Configure<SqreenOptions>(Configuration.GetSection("Sqreen"));
             services.AddTransient(sp => new Dispatcher(sp.GetServices<ITarget>()));
         }
 
