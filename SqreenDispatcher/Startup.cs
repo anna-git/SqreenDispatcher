@@ -36,8 +36,8 @@ namespace SqreenDispatcher
                 var type = TargetsConsts.targetTypes[item];
                 services.AddTransient(typeof(ITarget), type);
             }
-
-            services.Configure<SqreenOptions>(Configuration.GetSection("Sqreen"));
+            var options = Configuration.GetSection("Sqreen").Get<SqreenOptions>();
+            services.AddTransient(_ => options);
             services.AddTransient(sp => new Dispatcher(sp.GetServices<ITarget>()));
         }
 

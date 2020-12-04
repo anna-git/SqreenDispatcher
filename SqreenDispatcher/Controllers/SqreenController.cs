@@ -24,7 +24,7 @@ namespace SqreenDispatcher.Controllers
         }
 
         [HttpPost]
-        public void Alert(SqreenMessage message)
+        public void Alert(SqreenMessage[] messages)
         {
 
         }
