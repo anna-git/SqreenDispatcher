@@ -15,4 +15,10 @@
     <ProjectReference Include="..\SqreenDispatcher.Services\SqreenDispatcher.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="sqreendispatcherdb.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

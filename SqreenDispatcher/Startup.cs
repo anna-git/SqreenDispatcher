@@ -37,7 +37,10 @@ namespace SqreenDispatcher
                 services.AddTransient(typeof(ITarget), type);
             }
             var options = Configuration.GetSection("Sqreen").Get<SqreenOptions>();
+            var connString = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddTransient(_ => options);
+            services.AddTransient(_ => new DbOptions(connString));
             services.AddTransient(sp => new Dispatcher(sp.GetServices<ITarget>()));
         }
 

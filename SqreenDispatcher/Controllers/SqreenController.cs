@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SqreenDispatcher.Services;
 using SqreenDispatcher.Services.Model;
 
 namespace SqreenDispatcher.Controllers
@@ -10,11 +11,11 @@ namespace SqreenDispatcher.Controllers
     [Route("[controller]")]
     public class SqreenController
     {
-        private readonly ILogger<SqreenController> _logger;
+        private readonly Dispatcher _dispatcher;
 
-        public SqreenController(ILogger<SqreenController> logger)
+        public SqreenController(Dispatcher dispatcher)
         {
-            _logger = logger;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet]
@@ -24,9 +25,9 @@ namespace SqreenDispatcher.Controllers
         }
 
         [HttpPost]
-        public void Alert(SqreenMessage[] messages)
+        public async void Alert(SqreenMessage[] messages)
         {
-
+            await _dispatcher.Dispatch(messages);
         }
 
 

@@ -4,6 +4,6 @@ namespace SqreenDispatcher.Services
 {
     public interface ITarget
     {
-        public void Notify(SqreenMessage message);
+        public void Notify(SqreenMessage[] message);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using SqreenDispatcher.Services.Model;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SqreenDispatcher.Services
 {
@@ -9,10 +11,10 @@ namespace SqreenDispatcher.Services
 
         public Dispatcher(IEnumerable<ITarget> targets) => _targets = targets;
 
-        public void Dispatch(SqreenMessage message)
-        {
-            foreach (var target in _targets)
-                target.Notify(message);
-        }
+        public Task Dispatch(SqreenMessage[] messages) => Task.Run(() => Parallel.ForEach(_targets, target =>
+                                                                    {
+                                                                        target.Notify(messages);
+                                                                    }));
+
     }
 }

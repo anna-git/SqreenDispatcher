@@ -9,12 +9,12 @@ namespace SqreenDispatcher.Services.Model
     public class SqreenMessage
     {
         [JsonPropertyName("message_id")]
-        public string? MessageId { get; set; }
+        public string? Id { get; set; }
         [JsonPropertyName("api_version")]
         public string? ApiVersion { get; set; }
         [JsonPropertyName("message_type")]
 
-        public string? MessageType { get; set; }
+        public string? Type { get; set; }
 
 
         [JsonPropertyName("date_created")]

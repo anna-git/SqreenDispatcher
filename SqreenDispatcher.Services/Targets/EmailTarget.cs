@@ -9,6 +9,6 @@ namespace SqreenDispatcher.Services.Targets
 {
     public class EmailTarget : ITarget
     {
-        public void Notify(SqreenMessage message) => throw new NotImplementedException();
+        public void Notify(SqreenMessage[] message) => throw new NotImplementedException();
     }
 }
