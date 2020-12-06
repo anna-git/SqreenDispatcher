@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqreenDispatcher.Services",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqreenDispatcher.Tests", "SqreenDispatcher.Tests\SqreenDispatcher.Tests.csproj", "{B2960FB2-86D0-48E9-9BF3-4A8F899AE0E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqreenDispatcher.IntegrationTests", "SqreenDispatcher.IntegrationTests\SqreenDispatcher.IntegrationTests.csproj", "{54017963-76AA-4451-83DD-D77E99775218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqreenDispatcher.IntegrationTests", "SqreenDispatcher.IntegrationTests\SqreenDispatcher.IntegrationTests.csproj", "{54017963-76AA-4451-83DD-D77E99775218}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC3B18E2-0C10-4200-9047-7B29CE336F98}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
