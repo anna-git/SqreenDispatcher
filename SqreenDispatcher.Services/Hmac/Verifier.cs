@@ -8,7 +8,7 @@ namespace SqreenDispatcher.Services.Hmac
 {
     public class Verifier
     {
-        public static async Task<bool> VerifySignatureAsync(string secretKey, Stream content, string supposedSignature)
+        public static async Task<bool> VerifySignature(string secretKey, Stream content, string supposedSignature)
         {
             byte[] ba = Encoding.UTF8.GetBytes(secretKey);
             var hmac = new HMACSHA256(ba);

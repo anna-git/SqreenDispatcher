@@ -11,7 +11,7 @@ namespace SqreenDispatcher.Services
 
         public Dispatcher(IEnumerable<ITarget> targets) => _targets = targets;
 
-        public Task Dispatch(SqreenMessage[] messages) => Task.Run(() => Parallel.ForEach(_targets, target =>
+        public Task Dispatch(IEnumerable<SqreenMessage> messages) => Task.Run(() => Parallel.ForEach(_targets, target =>
                                                                     {
                                                                         target.Notify(messages);
                                                                     }));

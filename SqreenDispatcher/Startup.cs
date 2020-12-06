@@ -1,8 +1,10 @@
+using GeekLearning.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using SqreenDispatcher.Services;
 using SqreenDispatcher.Services.Targets;
 using System.Collections.Generic;
@@ -29,10 +31,11 @@ namespace SqreenDispatcher
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddLogging();
-            var targetsConfig = Configuration.GetSection("Targets").Get<List<string>>();
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+            var targetsConfig = Configuration.GetSection("Targets").Get<List<string>>()?? Enumerable.Empty<string>();
             foreach (var item in targetsConfig)
-            {
+            { 
                 var type = TargetsConsts.targetTypes[item];
                 services.AddTransient(typeof(ITarget), type);
             }
@@ -59,7 +62,6 @@ namespace SqreenDispatcher
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();

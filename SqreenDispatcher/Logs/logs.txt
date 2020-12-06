@@ -1,0 +1,6 @@
+2020-12-06 13:37:29.684 +01:00 [WRN] [test] Alert received at 12/6/2020 1:37:25 PM: SqreenDispatcher.Services.Model.Message. 
+ Api version is 2.
+2020-12-06 14:01:14.828 +01:00 [WRN] [test] Alert received at 12/6/2020 2:01:11 PM: . 
+ Api version: 2. 
+ Event category test 
+ Message id:40cdb349de261cb9cda8409a15294ea1

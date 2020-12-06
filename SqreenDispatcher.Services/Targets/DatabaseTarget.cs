@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using SqreenDispatcher.Services.Model;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SqreenDispatcher.Services.Targets
@@ -10,7 +11,7 @@ namespace SqreenDispatcher.Services.Targets
         private readonly DbOptions _options;
 
         public DatabaseTarget(DbOptions options) => _options = options;
-        public async void Notify(SqreenMessage[] messages)
+        public async void Notify(IEnumerable<SqreenMessage> messages)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder
             {

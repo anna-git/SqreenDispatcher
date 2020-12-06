@@ -41,5 +41,10 @@ namespace SqreenDispatcher.Services.Model
 
         [JsonPropertyName("event_url")]
         public string? EventUrl { get; set; }
+        [JsonPropertyName("humanized_description")]
+
+        public string? HumanizedDescription { get; set; }
+
+        public string? Id { get; set; }
     }
 }
