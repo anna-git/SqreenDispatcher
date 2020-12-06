@@ -2,11 +2,12 @@
 
 ## Structure
 - 1 web project wihout suffix just called SqreenDispatcher
-- 1 services project 
-- tests projects
-> structured through virtual solution folders in visual studio 
+- 1 services project : SqreenDispatcher.Services
+- tests projects suffixed by tests
+> organized through virtual solution folders in visual studio: src and tests folders. 
 
 The IOC is defined in class Startup.cs as per design in Asp.net Core.
+It is overidden in some of the tests
 
 **Main url is https://mydomain/sqreen**
 
