@@ -29,7 +29,5 @@ namespace SqreenDispatcher.Controllers
         {
             await _dispatcher.Dispatch(messages);
         }
-
-
     }
 }

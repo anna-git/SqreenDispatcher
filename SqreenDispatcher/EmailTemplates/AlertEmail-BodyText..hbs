@@ -1,0 +1,15 @@
+﻿Hi there!
+
+Sqreen detected an attack.
+
+
+Please find the details below:
+
+{{#each messages}}
+{{this.Id}} -[{{this.Message.EventId}} - {{this.DateCreated}}
+Retries: {{this.RetryCount}}
+Category: {{this.EventCategory}}
+{{this.HumanizedDescription}}
+Url: {{this.Url}}
+{{/each}}
+<!--add more infos from sqreen message object etc etc -->

@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GeekLearning.Email.Smtp" Version="0.5.0" />
+    <PackageReference Include="GeekLearning.Storage.FileSystem" Version="0.8.1" />
+    <PackageReference Include="GeekLearning.Templating.Handlebars" Version="0.7.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="EmailTemplates\AlertEmail-BodyHtml.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\AlertEmail-BodyText..hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EmailTemplates\AlertEmail-Subject.hbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="sqreendispatcherdb.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

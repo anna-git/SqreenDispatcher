@@ -1,4 +1,8 @@
 using GeekLearning.Domain;
+using GeekLearning.Email;
+using GeekLearning.Storage;
+using GeekLearning.Storage.Configuration;
+using GeekLearning.Templating;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,20 +18,20 @@ namespace SqreenDispatcher
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
            .SetBasePath(env.ContentRootPath)
            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
-
-
             Configuration = builder.Build();
+            _contentRootPath = env.ContentRootPath;
         }
 
-        public IConfiguration Configuration { get; }
+        private string _contentRootPath;
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public IConfigurationRoot Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -35,16 +39,25 @@ namespace SqreenDispatcher
 
             var targetsConfig = Configuration.GetSection("Targets").Get<List<string>>()?? Enumerable.Empty<string>();
             foreach (var item in targetsConfig)
-            { 
+            {
                 var type = TargetsConsts.targetTypes[item];
-                services.AddTransient(typeof(ITarget), type);
+                services.AddScoped(typeof(ITarget), type);
             }
-            var options = Configuration.GetSection("Sqreen").Get<SqreenOptions>();
-            var connString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddTransient(_ => options);
-            services.AddTransient(_ => new DbOptions(connString));
-            services.AddTransient(sp => new Dispatcher(sp.GetServices<ITarget>()));
+            services.Configure<StorageOptions>(Configuration.GetSection("Storage"));
+            var connString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddStorage(Configuration).AddFileSystemStorage(_contentRootPath);
+            services.AddTemplating().AddHandlebars();
+
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            services.AddEmail().AddSmtpEmail();
+            services.Configure<EmailOptions>(Configuration.GetSection("Email"));
+            services.AddMemoryCache();
+
+            var options = Configuration.GetSection("Sqreen").Get<SqreenOptions>();
+            services.AddScoped(_ => options);
+            services.AddScoped(_ => new DbOptions(connString));
+            services.AddScoped(sp => new Dispatcher(sp.GetServices<ITarget>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

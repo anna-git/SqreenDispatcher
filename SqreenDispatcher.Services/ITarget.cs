@@ -1,10 +1,11 @@
 ﻿using SqreenDispatcher.Services.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SqreenDispatcher.Services
 {
     public interface ITarget
     {
-        public void Notify(IEnumerable<SqreenMessage> message);
+        public Task Notify(IEnumerable<SqreenMessage> messages);
     }
 }

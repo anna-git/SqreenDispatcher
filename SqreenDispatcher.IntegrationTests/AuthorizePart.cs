@@ -1,25 +1,26 @@
 using GeekLearning.Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using SqreenDispatcher.Services.Model;
-using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using GeekLearning.Email;
 using Xunit;
 
 namespace SqreenDispatcher.IntegrationTests
 {
-    public class SimpleRequests :  IClassFixture<WebApplicationFactory<Startup>>
+    public class AuthorizePart :  IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
 
-        public SimpleRequests(WebApplicationFactory<Startup> factory)
+        public AuthorizePart(WebApplicationFactory<Startup> factory)
         {
 
-            _factory = factory.WithWebHostBuilder(c => c.UseEnvironment("Tests"));
+            _factory = factory.WithWebHostBuilder(builder => {builder.UseEnvironment("Tests");
+                builder.ConfigureServices(i => { i.AddInMemoryEmail(); });
+            });
 
         }
 
@@ -43,7 +44,6 @@ namespace SqreenDispatcher.IntegrationTests
         [Fact]
         public async Task TestAuthorizeOk()
         {
-            // Arrange
             var client = _factory.CreateClient();
 
             client.DefaultRequestHeaders.Add("X-Sqreen-Integrity", "5768234ff20d732ca1d63bdcde02a4c7a2a68ccbf1ffbe4c35345c6ef594d1aa"); 

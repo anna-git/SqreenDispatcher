@@ -11,7 +11,7 @@ namespace SqreenDispatcher.Services.Targets
         private readonly DbOptions _options;
 
         public DatabaseTarget(DbOptions options) => _options = options;
-        public async void Notify(IEnumerable<SqreenMessage> messages)
+        public async Task Notify(IEnumerable<SqreenMessage> messages)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder
             {
@@ -29,7 +29,8 @@ namespace SqreenDispatcher.Services.Targets
                 insertCmd.CommandText = "INSERT INTO Alerts (MessageId, EventUrl, MessageType) VALUES(@MessageId, @EventUrl, @MessageType)";
                 insertCmd.Parameters.Add(new SqliteParameter("@MessageId", message.Id??string.Empty));
                 insertCmd.Parameters.Add(new SqliteParameter("@MessageType", message.Type ?? string.Empty));
-                insertCmd.Parameters.Add(new SqliteParameter("@EventUrl", message.Message.EventUrl ?? string.Empty));
+                insertCmd.Parameters.Add(new SqliteParameter("@EventUrl", message.Message?.EventUrl ?? string.Empty));
+                //TODO add other fields, change sql tables accordingly
                 await insertCmd.ExecuteNonQueryAsync();
             }
 
