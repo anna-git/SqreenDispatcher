@@ -18,7 +18,12 @@ There are 3 targets for now: email (Geeklearning library with handlebars templat
 
 ### Architecture
 
-One could add any number of targets by deriving from the type ITarget and registering a key (in TargetsConsts) with a matching type to instantiate. 
+1. **Startup.cs** runs first. It defines all IOC. Depending on the configuration, it will register different targets in the IOC container. 
+2. Requests arrive to the **SqreenController.cs** Alert(messages) method, which in turn, call the services layer with the deserialized messages. 
+3. The **Dispatcher.cs** comes into play. He is responsible for dispatching the messages to registered targets in configuration. His constructor takes all implementations of ITarget available in the IOC container. It doesn't have any knowledge as to which target or which implementation is in its list. 
+4. All targets receive parallely the messages and treat them according to their specific implementations and configurations. 
+
+>One could add any number of targets by deriving from the type ITarget and registering a key (in TargetsConsts) with a matching type to instantiate. 
 
 The library geeklearning allow to configure mockup recipients, templates, different storage options (file system, azure storage..), different email providers (smtp, sendgrid..), here for demo purposes, we use the file system storage with email templates being in the folder EmailTempplates.
 
