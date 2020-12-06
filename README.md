@@ -36,5 +36,4 @@ essentially for the authenticator verifier
 replacing targets in IOC. One could think of really testing the targets themselves, or their equivalent in memory. 
 
 *NB: for demo purposes, all properties of the sent json haven't been treated in all targets. We would just need to add them, and format them according to the target.
-
 Likewise, the app doesn't have a UI yet, its main purpose is to dispatch messages.*
